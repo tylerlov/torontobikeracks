@@ -42,14 +42,12 @@ const validateCampground = (req,res,next) => {
     }
 }
 
-const validateReview = (req,res,next) => {
-    const { error } = reviewSchema.valid(req.body);
-
-    if(error){
-        const msg = error.details.map(el => el.message).join(`,`)
+const validateReview = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)
-    }
-    else{
+    } else {
         next();
     }
 }
@@ -93,14 +91,14 @@ app.put(`/campgrounds/:id`, validateCampground, catchAsync (async(req,res) => {
     res.redirect(`/campgrounds/${campground._id}`);
 }))
 
-app.delete(`/campgrounds/:id`, validateReview, catchAsync (async(req,res) => {
+app.delete(`/campgrounds/:id`, catchAsync (async(req,res) => {
     const {id} = req.params;
     await Campground.findByIdAndDelete(id);
     res.redirect(`/campgrounds`);
 
 }))
 
-app.post(`/campgrounds/:id/reviews`, catchAsync(async (req, res) => {
+app.post(`/campgrounds/:id/reviews`, validateReview, catchAsync(async (req, res) => {
     const campground = await Campground.findById(req.params.id)
     const review = new Review(req.body.review);
     campground.reviews.push(review);
