@@ -6,12 +6,16 @@ const ExpressError = require(`./utils/ExpressError`);
 const methodoverride = require (`method-override`);
 const session = require(`express-session`)
 const flash = require(`connect-flash`)
+const passport = require('passport')
+const LocalStrategy = require('passport-local')
+const User = require('./models/user')
+
 
 const res = require("express/lib/response");
 
-
-const campgrounds = require(`./routes/campgrounds`);
-const reviews = require(`./routes/reviews`);
+const campgroundRoutes = require(`./routes/campgrounds`);
+const reviewRoutes = require(`./routes/reviews`);
+const userRoutes = require('./routes/users')
 
 mongoose.connect(`mongodb://localhost:27017/yelp-camp`, {
     useUnifiedTopology: true
@@ -33,6 +37,7 @@ app.use(express.static(path.join(__dirname, `public`)));
 app.use(express.urlencoded({ extended: true}))
 app.use(methodoverride(`_method`));
 
+
 const sessionConfig = {
     secret: `thiscouldbebetter`,
     resave: false,
@@ -47,15 +52,27 @@ const sessionConfig = {
 app.use(session(sessionConfig))
 app.use(flash())
 
+app.use(passport.initialize())
+app.use(passport.session())
+passport.use(new LocalStrategy(User.authenticate()))
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+//This allows us global access to the below
+//Flash messages and current logged in user from Passport implementation
 app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash(`success`);
     res.locals.success = req.flash(`error`);
     next();
 })
 
+
 //routes code
-app.use(`/campgrounds`, campgrounds)
-app.use(`/campgrounds/:id/reviews`, reviews)
+app.use('/', userRoutes)
+app.use(`/campgrounds`, campgroundRoutes)
+app.use(`/campgrounds/:id/reviews`, reviewRoutes)
 
 app.get(`/`, (req,res) => {
     res.render(`home`)
