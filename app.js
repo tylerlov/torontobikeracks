@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
 const express = require(`express`) 
 const ejsMate = require(`ejs-mate`)
 const path = require(`path`);
@@ -64,7 +68,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     res.locals.success = req.flash(`success`);
-    res.locals.success = req.flash(`error`);
+    res.locals.error = req.flash(`error`);
     next();
 })
 
