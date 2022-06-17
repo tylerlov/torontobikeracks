@@ -1,14 +1,26 @@
 <% layout('layouts/boilerplate') %> 
-<h1>Login!</h1>
-<form action="/login" class="validated-form" method="POST" novalidate>
-    <div class="mb-3">
-        <label class="form-label" for="username">Username</label>
-            <input type="text" class="form-control" id="username" placeholder="" name="username" required>
-    </div>
 
-    <div class="mb-3">
-        <label class="form-label" for="password">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="" name="password" required>
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="row">
+            <div class="card shadow">
+                <%# Using Cloudinary sizing feature on image %>
+                <img src="https://res.cloudinary.com/ds2hafwml/image/upload/h_150/v1655121742/YelpCamp/nevisfhd89qiobqw0lt5.jpg" alt="" class="card-img-top">
+                    <div class="card-body">
+                    <h6>Login</h6>
+                        <form action="/login" class="validated-form" method="POST" novalidate>
+                            <div class="mb-3">
+                                <label class="form-label" for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" placeholder="" name="username" required autofocus>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" placeholder="" name="password" required>
+                            </div>
+                            <button class="btn btn-success">Login</button>
+                    </form>
+                </div>
+            </div>
     </div>
-    <button class="btn btn-success">Login</button>
-</form>
+</div>
+
+
