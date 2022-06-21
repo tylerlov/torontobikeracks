@@ -20,7 +20,7 @@ const MongoStore = require('connect-mongo');
 
 const res = require("express/lib/response");
 
-const campgroundRoutes = require(`./routes/campgrounds`);
+const bikerackRoutes = require(`./routes/bikeracks`);
 const reviewRoutes = require(`./routes/reviews`);
 const userRoutes = require('./routes/users')
 
@@ -144,11 +144,11 @@ app.use((req, res, next) => {
 
 //routes code
 app.use('/', userRoutes)
-app.use(`/campgrounds`, campgroundRoutes)
-app.use(`/campgrounds/:id/reviews`, reviewRoutes)
+app.use(`/bikeracks`, bikerackRoutes)
+app.use(`/bikeracks/:id/reviews`, reviewRoutes)
 
 app.get(`/`, (req,res) => {
-    res.redirect(`/campgrounds`)
+    res.redirect(`/bikeracks`)
 })
 
 app.all(`*`, (req,res,next) => {

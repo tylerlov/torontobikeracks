@@ -1,8 +1,5 @@
 const mongoose = require (`mongoose`);
-const cities = require (`./cities`)
-const  { places, descriptors } = require(`./seedHelpers`);
-const Campground = require(`../models/campground`)
-
+const Bikerack = require(`../models/bikerack`)
 const bikedata = require('./bikedata')
 
 
@@ -16,20 +13,19 @@ db.once("open", () => {
     console.log("Database connected");
 });
 
-const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
 //console.log(bikedata)
 
 const seedDB = async () => {
-    await Campground.deleteMany({});
-    for(let i = 0; i < 50; i++){
-            const camp = new Campground({
+    await Bikerack.deleteMany({});
+    for(let i = 0; i < 117; i++){
+            const bikes = new Bikerack({
                 author: '62b1a3b16b562b4cf76cd71d',
                 location: `${bikedata[i].properties.ADDRESS_FULL}, ${bikedata[i].properties.CITY} - ${bikedata[i].properties.WARD}`,
                 title: `${bikedata[i].properties.PARKING_TYPE}`,
-                image: `https://source.unsplash.com/collection/483251`,
-                description: `Installed in ${bikedata[i].properties.YEAR_INSTALLED}, this bike rack can hold ${bikedata[i].properties.BICYCLE_CAPACITY} and belongs to ${bikedata[i].properties.WARD} ward.`,
-                price: 10,
+                //image: `https://source.unsplash.com/collection/483251`,
+                description: `Installed in ${bikedata[i].properties.YEAR_INSTALLED}, this bike rack can hold ${bikedata[i].properties.BICYCLE_CAPACITY} bikes and belongs to ${bikedata[i].properties.WARD} ward.`,
+                capacity: bikedata[i].properties.BICYCLE_CAPACITY,
                 geometry: 
                 { 
                   "type": "Point", 
@@ -50,7 +46,7 @@ const seedDB = async () => {
                     }
                   ]
             })
-        await camp.save();
+        await bikes.save();
     }
 }
 

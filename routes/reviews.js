@@ -4,7 +4,7 @@ const reviews = require('../controllers/reviews')
 
 const catchAsync = require(`../utils/catchAsync`);
 const ExpressError = require(`../utils/ExpressError`);
-const Campground = require(`../models/campground`);
+const Bikerack = require(`../models/bikerack`);
 const Review = require(`../models/review`);
 const { reviewSchema } = require(`../schemas`)
 
