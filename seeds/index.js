@@ -3,7 +3,10 @@ const cities = require (`./cities`)
 const  { places, descriptors } = require(`./seedHelpers`);
 const Campground = require(`../models/campground`)
 
-mongoose.connect(`mongodb://localhost:27017/yelp-camp`, {
+const bikedata = require('./bikedata')
+
+
+mongoose.connect(`mongodb://localhost:27017/torontobikeracks`, {
     useUnifiedTopology: true
 })
 
@@ -15,24 +18,24 @@ db.once("open", () => {
 
 const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
+//console.log(bikedata)
+
 const seedDB = async () => {
     await Campground.deleteMany({});
-    for(let i = 0; i < 200; i++){
-        const random1000 = Math.floor(Math.random() * 1000);
-        const randomPrice = Math.floor(Math.random() * 30) + 50;
+    for(let i = 0; i < 50; i++){
             const camp = new Campground({
-                author: '62a1f193d5777ae5763a38b9',
-                location: `${cities[random1000].city}, ${cities[random1000].state}`,
-                title: `${sample(descriptors)} ${sample(places)}`,
+                author: '62b1a3b16b562b4cf76cd71d',
+                location: `${bikedata[i].properties.ADDRESS_FULL}, ${bikedata[i].properties.CITY} - ${bikedata[i].properties.WARD}`,
+                title: `${bikedata[i].properties.PARKING_TYPE}`,
                 image: `https://source.unsplash.com/collection/483251`,
-                description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. In fermentum enim in libero laoreet iaculis. Nam ornare congue sem, a porta sem. Morbi aliquet porttitor sapien eu porttitor. Nulla facilisi. Etiam laoreet velit a leo ullamcorper, vel luctus quam rhoncus. Fusce sagittis eget nunc ac accumsan. Praesent ut nulla nec odio gravida consequat sed eu augue. Nunc mollis arcu libero, in sollicitudin est interdum non. Suspendisse quis sapien vel orci convallis fringilla ac hendrerit nulla. Nam suscipit tristique sapien nec lacinia.Aenean eget rhoncus orci. Nunc augue ex, pharetra a laoreet vel, hendrerit nec ex. Nullam lobortis euismod nibh eu interdum. Mauris libero orci, consectetur in massa vitae, dapibus laoreet diam. Etiam dignissim varius justo, ac varius tortor egestas vitae. Sed nisi felis, tempor eget scelerisque id, commodo quis justo. Donec magna ante, elementum at pellentesque ac, lacinia eget leo.`,
-                price: randomPrice,
+                description: `Installed in ${bikedata[i].properties.YEAR_INSTALLED}, this bike rack can hold ${bikedata[i].properties.BICYCLE_CAPACITY} and belongs to ${bikedata[i].properties.WARD} ward.`,
+                price: 10,
                 geometry: 
                 { 
                   "type": "Point", 
                   "coordinates": [
-                    cities[random1000].longitude,
-                    cities[random1000].latitude,
+                    bikedata[i].geometry.coordinates[0],
+                    bikedata[i].geometry.coordinates[1],
                 ]
                 },
                 images: 

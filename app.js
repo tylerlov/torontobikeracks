@@ -24,10 +24,8 @@ const campgroundRoutes = require(`./routes/campgrounds`);
 const reviewRoutes = require(`./routes/reviews`);
 const userRoutes = require('./routes/users')
 
-const dbUrl = process.env.DB_URL || `mongodb://localhost:27017/yelp-camp`
+const dbUrl = `mongodb://localhost:27017/torontobikeracks`
 
-//dbUrl for when we deploy
-//`mongodb://localhost:27017/yelp-camp` for local
 mongoose.connect(dbUrl, {
     useUnifiedTopology: true
 })
