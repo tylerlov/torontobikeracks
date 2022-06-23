@@ -24,7 +24,7 @@ const bikerackRoutes = require(`./routes/bikeracks`);
 const reviewRoutes = require(`./routes/reviews`);
 const userRoutes = require('./routes/users')
 
-const dbUrl = `mongodb://localhost:27017/torontobikeracks`
+const dbUrl = process.env.DB_URL || `mongodb://localhost:27017/torontobikeracks`
 
 mongoose.connect(dbUrl, {
     useUnifiedTopology: true
