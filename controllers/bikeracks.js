@@ -14,19 +14,16 @@ module.exports.renderNewForm = (req,res) => {
 }
 
 module.exports.createBikerack= async(req,res,next) => {
-    // old method, new is above - validateCampground
- //   if(!req.body.campground) throw new ExpressError(`Invalid campground data`, 400)
-    //Above is implicit returm 
     const geoData = await geocoder.forwardGeocode({
         query: req.body.bikerack.location,
         limit: 1
     }).send()
     const bikerack = new Bikerack(req.body.bikerack);
-    campground.geometry = geoData.body.features[0].geometry
-    campground.images = req.files.map(f => ({ url: f.path, filename: f.filename }))
-    campground.author = req.user._id;
+    bikerack.geometry = geoData.body.features[0].geometry
+    bikerack.images = req.files.map(f => ({ url: f.path, filename: f.filename }))
+    bikerack.author = req.user._id;
     await bikerack.save();
-    req.flash(`success`,`Successfully made a new Bikerack!`)
+    req.flash(`success`,`Successfully added a new Bike Rack`)
     res.redirect(`bikeracks/${bikerack._id}`);
 }
 
@@ -47,7 +44,7 @@ module.exports.updateBikerack= async(req,res) => {
     const { id } = req.params;
     const bikerack = await Bikerack.findById(id);
     if (!bikerack){
-        req.flash('error', 'Cannot find that Bikerack!')
+        req.flash('error', 'Cannot find that Bike Rack')
         return res.redirect('/bikeracks')
     }
     const biker = await Bikerack.findByIdAndUpdate(id,{...req.body.bikerack}, {new: true})
@@ -63,12 +60,13 @@ module.exports.updateBikerack= async(req,res) => {
 
     biker.save()
 
-    req.flash('success', 'Successfully updated Bikerack!')
+    req.flash('success', 'Successfully updated the Bike Rack')
     res.redirect(`/bikeracks/${bikerack._id}`);
 }
 
 module.exports.deleteBikerack = async(req,res) => {
     const {id} = req.params;
     await Bikerack.findByIdAndDelete(id);
+    req.flash('success', 'Successfully deleted the Bike Rack')
     res.redirect(`/bikeracks`);
 }

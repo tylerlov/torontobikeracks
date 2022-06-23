@@ -10,7 +10,7 @@ const extension = (joi) => ({
     rules: {
             escapeHTML: {
                 validate(value, helpers) {
-                    const clean = sanitizeHtml(value, {
+                    const clean = sanitizeHTML(value, {
                         allowedTags: [],
                         allowedAttributes: {},
                     });
@@ -24,12 +24,12 @@ const extension = (joi) => ({
 const Joi = BaseJoi.extend(extension)
 
 module.exports.bikerackSchema = Joi.object({
-    campground: Joi.object({
-        title: Joi.string().required().escapeHTML,
+    bikerack: Joi.object({
+        title: Joi.string().required().escapeHTML(),
         capacity: Joi.number().required().min(0),
      //   image: Joi.string().required(),
-        description: Joi.string().required().escapeHTML,
-        location: Joi.string().required().escapeHTML
+        description: Joi.string().required().escapeHTML(),
+        location: Joi.string().required().escapeHTML()
     }).required(),
     deleteImages: Joi.array()
 })

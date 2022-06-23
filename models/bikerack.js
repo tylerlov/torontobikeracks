@@ -61,4 +61,4 @@ BikerackSchema.post('findOneAndDelete', async function (doc) {
     }
 })
 
-module.exports = mongoose.model('Campground', BikerackSchema);
+module.exports = mongoose.model('Bikerack', BikerackSchema);

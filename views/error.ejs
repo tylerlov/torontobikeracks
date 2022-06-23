@@ -4,9 +4,7 @@
         <div class="alert alert-danger" role="alert">
             <h4 class="alert-heading">Error!</h4>
             <p class="mb-0"> Wow, that's unfortuante. Here's what happened:  <%= err.message %> </p>
-            <% if (process.env.NODE_ENV !== "production") { %>
             <p class="mb-0"> <%= err.stack %> </p>
-            <% } %>
         </div>
     </div>
 </div>

@@ -8,6 +8,7 @@ module.exports.createReview = async (req, res) => {
     bikerack.reviews.push(review);
     await review.save();
     await bikerack.save();
+    req.flash('success', 'Created a new review');
     res.redirect(`/bikeracks/${bikerack._id}`);
 }
 
@@ -15,5 +16,6 @@ module.exports.deleteReview = async(req,res) => {
     const { id, reviewId } = req.params;
     await Bikerack.findByIdAndUpdate(id, { $pull: {reviews: reviewId}})
     await Review.findByIdAndDelete(reviewId);
+    req.flash('success', 'Deleted a review');
     res.redirect(`/bikeracks/${id}`)
 }

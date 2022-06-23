@@ -21,10 +21,9 @@ const seedDB = async () => {
     for(let i = 0; i < 117; i++){
             const bikes = new Bikerack({
                 author: '62b1a3b16b562b4cf76cd71d',
-                location: `${bikedata[i].properties.ADDRESS_FULL}, ${bikedata[i].properties.CITY} - ${bikedata[i].properties.WARD}`,
+                location: `${bikedata[i].properties.ADDRESS_FULL}, ${bikedata[i].properties.CITY}`,
                 title: `${bikedata[i].properties.PARKING_TYPE}`,
-                //image: `https://source.unsplash.com/collection/483251`,
-                description: `Installed in ${bikedata[i].properties.YEAR_INSTALLED}, this bike rack can hold ${bikedata[i].properties.BICYCLE_CAPACITY} bikes and belongs to ${bikedata[i].properties.WARD} ward.`,
+                description: `Installed in ${bikedata[i].properties.YEAR_INSTALLED}, this ${bikedata[i].properties.PARKING_TYPE} can hold ${bikedata[i].properties.BICYCLE_CAPACITY} bikes and belongs to Ward ${bikedata[i].properties.WARD}.`,
                 capacity: bikedata[i].properties.BICYCLE_CAPACITY,
                 geometry: 
                 { 
@@ -37,13 +36,9 @@ const seedDB = async () => {
                 images: 
                   [
                     {
-                      url: 'https://res.cloudinary.com/ds2hafwml/image/upload/v1655121742/YelpCamp/nevisfhd89qiobqw0lt5.jpg',
-                      filename: 'YelpCamp/nevisfhd89qiobqw0lt5',
+                      url: 'https://res.cloudinary.com/ds2hafwml/image/upload/v1655896331/Toronto%20Bike%20Racks/image_not_available.jpg',
+                      filename: 'TorontoBikeRacks/image_not_available.jpg',
                     },
-                    {
-                      url: 'https://res.cloudinary.com/ds2hafwml/image/upload/v1655121742/YelpCamp/tkm5uubvshihbhoeiyq3.jpg',
-                      filename: 'YelpCamp/tkm5uubvshihbhoeiyq3',
-                    }
                   ]
             })
         await bikes.save();
