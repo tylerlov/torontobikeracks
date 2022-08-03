@@ -8,12 +8,14 @@ const map = new mapboxgl.Map({
 
 map.addControl(new mapboxgl.NavigationControl());
 
+
 new mapboxgl.Marker()
     .setLngLat(bikerack.geometry.coordinates)
     .setPopup(
         new mapboxgl.Popup({ offset: 25 })
             .setHTML(
-                `<h3>${bikerack.title}</h3><p>${bikerack.location}</p>`
+                `<h2>${bikerack.title}</h2>
+                <h4>${bikerack.location}</h4>`
             )
     )
     .addTo(map)
